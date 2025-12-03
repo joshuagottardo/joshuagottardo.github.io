@@ -1,3 +1,40 @@
+// --- 0. CURSOR ANIMATION LOGIC ---
+function initCustomCursor() {
+  const cursorDot = document.querySelector(".cursor-dot");
+  const cursorOutline = document.querySelector(".cursor-outline");
+
+  if (!cursorDot || !cursorOutline) return;
+
+  window.addEventListener("mousemove", (e) => {
+    const posX = e.clientX;
+    const posY = e.clientY;
+
+    cursorDot.style.left = `${posX}px`;
+    cursorDot.style.top = `${posY}px`;
+
+    gsap.to(cursorOutline, {
+      x: posX,
+      y: posY,
+      duration: 0.25,
+      ease: "power2.out",
+    });
+  });
+
+  const interactiveElements = document.querySelectorAll(
+    "a, button, .btn, .social-link, .lang-btn"
+  );
+
+  interactiveElements.forEach((el) => {
+    el.addEventListener("mouseenter", () => {
+      document.body.classList.add("hovering");
+    });
+
+    el.addEventListener("mouseleave", () => {
+      document.body.classList.remove("hovering");
+    });
+  });
+}
+
 /* =========================================
    1. TRANSLATIONS (i18n)
    ========================================= */
@@ -7,6 +44,7 @@ const translations = {
     hero_desc: "Studente di Ingegneria Informatica e appassionato sviluppatore",
     btn_projects: "Vedi Progetti",
     download_cv: "Scarica CV",
+    scroll_text: "Scorri",
 
     // About
     about_title_1: "Chi Sono",
@@ -55,7 +93,7 @@ const translations = {
     proj_2_title: "Resell Vault & Analytics",
     proj_2_desc:
       "Applicazione cross-platform per ottimizzare il flusso di vendita nel mercato dell'usato. Traccia l'intero ciclo di vita dell'asset: dall'acquisizione alla vendita, calcolando automaticamente <strong>margini netti</strong>, consigli su prezzi di vendita e ROI per ogni piattaforma utilizzata.",
-    
+
     proj_3_title: "ST Studio Milano",
     proj_3_desc:
       "Non solo una vetrina, ma un asset digitale per il posizionamento del brand sui mercati internazionali. Focalizzato su architettura SEO-friendly per massimizzare la conversione dei visitatori in lead qualificati.",
@@ -71,6 +109,7 @@ const translations = {
     hero_desc: "Computer Engineering student and a passionate developer",
     btn_projects: "View Projects",
     download_cv: "Download Resume",
+    scroll_text: "Scroll",
 
     // About
     about_title_1: "About Me",
@@ -139,7 +178,6 @@ function setLanguage(lang) {
   const elements = document.querySelectorAll("[data-i18n]");
   elements.forEach((el) => {
     const key = el.getAttribute("data-i18n");
-    // Verifica di sicurezza: se la chiave esiste, aggiorna
     if (translations[lang] && translations[lang][key]) {
       el.innerHTML = translations[lang][key];
     }
@@ -148,13 +186,14 @@ function setLanguage(lang) {
   // 2. Aggiorna stato bottoni
   document.querySelectorAll(".lang-btn").forEach((btn) => {
     btn.classList.remove("active");
-    // Controllo sull'attributo onclick
-    if (btn.getAttribute("onclick") && btn.getAttribute("onclick").includes(lang)) {
+    if (
+      btn.getAttribute("onclick") &&
+      btn.getAttribute("onclick").includes(lang)
+    ) {
       btn.classList.add("active");
     }
   });
 
-  // 3. Ricalcola le animazioni di ScrollTrigger
   ScrollTrigger.refresh();
 }
 
@@ -170,16 +209,13 @@ function initHero() {
   const heroWrapper = document.querySelector("#hero");
   const tiltCard = document.querySelector("#tilt-card");
 
-  // Safety Check
   if (!heroWrapper || !tiltCard) return;
 
-  // Setup 3D CSS
   gsap.set("#tilt-card", {
     transformPerspective: 1000,
     transformStyle: "preserve-3d",
   });
 
-  // Mouse Move Effect (solo se l'utente non ha richiesto "reduced motion")
   const safeMotion = window.matchMedia(
     "(prefers-reduced-motion: no-preference)"
   ).matches;
@@ -216,20 +252,20 @@ function initHero() {
   // Entrance Animation
   const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
   gsap.set(".hero-card", { visibility: "visible" });
-  
+
   tl.from(".hero-card", { y: 60, opacity: 0, duration: 1.4 })
     .from(".eyebrow", { opacity: 0, y: 10, duration: 0.8 }, "-=1")
     .from(".hero-title", { opacity: 0, y: 20, duration: 1 }, "-=0.8")
     .from(".hero-description", { opacity: 0, y: 20, duration: 1 }, "-=0.8")
     .from(".cta-group", { opacity: 0, y: 20, duration: 1 }, "-=0.8")
-    .from(".top-nav", { opacity: 0, y: -20, duration: 1 }, "-=1.2");
+    .from(".top-nav", { opacity: 0, y: -20, duration: 1 }, "-=1.2")
+    .to(".hero-scroll", { opacity: 1, duration: 1 }, "-=0.5");
 }
 
 // --- ABOUT SECTION ---
 function initAbout() {
-  // Reveal Text Animation (Scrollytelling)
   const textBlocks = gsap.utils.toArray(".reveal-text");
-  
+
   if (textBlocks.length > 0) {
     textBlocks.forEach((text) => {
       gsap.to(text, {
@@ -245,7 +281,6 @@ function initAbout() {
     });
   }
 
-  // Image Reveal
   const imageWrapper = document.querySelector(".image-wrapper");
   if (imageWrapper) {
     gsap.from(".image-wrapper", {
@@ -265,49 +300,55 @@ function initHorizontalSkills() {
 
   if (!skillsSection || !skillsWrapper) return;
 
-  // Cleanup: Rimuovi vecchi trigger se la funzione viene richiamata (resize)
   ScrollTrigger.getAll().forEach((t) => {
-    if (t.trigger === skillsSection) t.kill();
+    if (t.trigger === skillsSection || t.trigger === skillsWrapper) t.kill();
   });
 
-  // Cleanup: Rimuovi vecchio spacer
   const existingSpacer = document.querySelector("#_skills_spacer");
   if (existingSpacer) existingSpacer.remove();
 
-  // Calcolo matematico scroll
-  const full = skillsWrapper.scrollWidth;
-  const viewport = window.innerWidth;
-  const moveDist = Math.max(0, full - viewport);
+  ScrollTrigger.matchMedia({
+    "(min-width: 901px)": function () {
+      const full = skillsWrapper.scrollWidth;
+      const viewport = window.innerWidth;
+      const moveDist = Math.max(0, full - viewport);
 
-  // Se non c'è nulla da scorrere, resetta e esci
-  if (moveDist <= 0) {
-    gsap.set(skillsWrapper, { x: 0 });
-    return;
-  }
+      if (moveDist <= 0) {
+        gsap.set(skillsWrapper, { x: 0 });
+        return;
+      }
 
-  // Creazione Spacer
-  const spacer = document.createElement("div");
-  spacer.id = "_skills_spacer";
-  spacer.style.width = "1px";
-  spacer.style.height = window.innerHeight + moveDist + 50 + "px";
-  spacer.style.pointerEvents = "none";
-  spacer.style.opacity = "0";
-  skillsSection.insertAdjacentElement("afterend", spacer);
+      const spacer = document.createElement("div");
+      spacer.id = "_skills_spacer";
+      spacer.style.width = "1px";
+      spacer.style.height = window.innerHeight + moveDist + "px";
+      spacer.style.opacity = "0";
+      skillsSection.insertAdjacentElement("afterend", spacer);
 
-  // ScrollTrigger Animation
-  ScrollTrigger.create({
-    trigger: "#skills",
-    start: "top top",
-    end: () => "+=" + (window.innerHeight + moveDist), // La durata dipende dalla lunghezza contenuto
-    scrub: 1,
-    pin: true,
-    markers: false,
-    invalidateOnRefresh: true,
-    onUpdate(self) {
-      // Muove il wrapper orizzontalmente in base allo scroll verticale
-      const prog = self.progress;
-      const x = -prog * moveDist;
-      gsap.set(skillsWrapper, { x });
+      ScrollTrigger.create({
+        trigger: "#skills",
+        start: "top top",
+        end: () => "+=" + (window.innerHeight + moveDist),
+        scrub: 1,
+        pin: true,
+        onUpdate(self) {
+          const prog = self.progress;
+          const x = -prog * moveDist;
+          gsap.set(skillsWrapper, { x });
+        },
+      });
+    },
+
+    // Mobile logic
+    "(max-width: 900px)": function () {
+      gsap.set(skillsWrapper, { clearProps: "all" });
+      ScrollTrigger.getAll().forEach((t) => t.kill());
+
+      const existingSpacer = document.querySelector("#_skills_spacer");
+      if (existingSpacer) existingSpacer.remove();
+
+      skillsSection.style.overflowX = "auto";
+      skillsSection.style.height = "auto";
     },
   });
 }
@@ -316,18 +357,17 @@ function initHorizontalSkills() {
    4. INITIALIZATION
    ========================================= */
 window.addEventListener("load", () => {
-  // Inizializza tutte le sezioni
   initHero();
   initAbout();
   initHorizontalSkills();
+  initCustomCursor();
 
-  // Gestione Resize: Ricalcola lo scroll orizzontale
   let resizeTimeout;
   window.addEventListener("resize", () => {
     clearTimeout(resizeTimeout);
     resizeTimeout = setTimeout(() => {
       initHorizontalSkills();
       ScrollTrigger.refresh();
-    }, 150); // Debounce di 150ms per performance
+    }, 150);
   });
 });

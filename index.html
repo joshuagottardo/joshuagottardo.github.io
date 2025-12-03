@@ -3,27 +3,53 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Joshua Gottardo | Portfolio</title>
 
+    <title>Joshua Gottardo</title>
+    <meta
+      name="description"
+      content="Portfolio di Joshua Gottardo. Sviluppatore con visione a 360° su Ingegneria Software, Business e Strategia." />
+    <meta name="author" content="Joshua Gottardo" />
+    <meta
+      name="keywords"
+      content="Developer, Portfolio, Fintech, Legal Tech, Software Engineer, Frontend, Backend" />
+
+    <link rel="icon" href="assets/favicon.ico" type="image/x-icon" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://joshuagottardo.github.io/" />
+    <meta property="og:title" content="Joshua Gottardo" />
+    <meta
+      property="og:description"
+      content="Esplora i miei progetti e le mie competenze." />
+    <meta
+      property="og:image"
+      content="https://joshuagottardo.github.io/assets/preview.png" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Joshua Gottardo" />
+    <meta
+      name="twitter:description"
+      content="Sviluppatore con visione a 360°. Code, Finance, Strategy." />
+    <meta
+      name="twitter:image"
+      content="https://joshuagottardo.github.io/assets/favicon.jpg" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;700;800&family=Space+Mono:wght@400;700&display=swap"
       rel="stylesheet" />
-
     <link
       rel="stylesheet"
       type="text/css"
       href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css" />
-
     <link rel="stylesheet" href="style.css" />
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
     <script src="script.js" defer></script>
   </head>
-
   <body>
+    <div class="cursor-dot"></div>
+    <div class="cursor-outline"></div>
     <div class="ambient-light"></div>
 
     <nav class="top-nav">
@@ -120,6 +146,22 @@
           </a>
         </div>
       </div>
+      <div class="hero-scroll">
+        <span data-i18n="scroll_text">Scorri</span>
+        <svg
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg">
+          <path
+            d="M12 5V19M12 19L19 12M12 19L5 12"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round" />
+        </svg>
+      </div>
     </main>
 
     <section id="about">
@@ -170,7 +212,9 @@
     <section id="skills">
       <div class="skills-wrapper">
         <div class="skill-card intro-card">
-          <h2 data-i18n="skills_title">Il mio Arsenale.</h2>
+          <h2 data-i18n="skills_title" class="skills-title">
+            Il mio Bagaglio.
+          </h2>
           <p data-i18n="skills_text">Competenze tecniche e trasversali</p>
           <div data-i18n="skills_scroll" class="scroll-indicator">
             Scorri &rarr;
@@ -548,9 +592,6 @@
     </section>
 
     <footer id="footer">
-      <h2 class="footer-title" data-i18n="footer_title">
-        Costruiamo qualcosa<br />di notevole.
-      </h2>
       <p class="footer-cta" data-i18n="footer_desc">
         Sono sempre alla ricerca di sfide che mi facciano scoprire qualcosa di
         nuovo.
