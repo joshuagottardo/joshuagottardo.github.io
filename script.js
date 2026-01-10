@@ -269,7 +269,6 @@ function initHero() {
 // --- ABOUT SECTION ---
 function initAbout() {
   const textBlocks = gsap.utils.toArray(".reveal-text");
-
   if (textBlocks.length > 0) {
     textBlocks.forEach((text) => {
       gsap.to(text, {
@@ -285,15 +284,18 @@ function initAbout() {
     });
   }
 
-  const imageWrapper = document.querySelector(".image-wrapper");
-  if (imageWrapper) {
-    gsap.from(".image-wrapper", {
-      scrollTrigger: { trigger: "#about", start: "top 80%" },
-      scale: 0.9,
-      opacity: 0,
-      duration: 1.5,
-      ease: "power3.out",
-    });
+  // 2. Animazione Immagine
+  if (window.matchMedia("(min-width: 901px)").matches) {
+    const imageWrapper = document.querySelector(".image-wrapper");
+    if (imageWrapper) {
+      gsap.from(".image-wrapper", {
+        scrollTrigger: { trigger: "#about", start: "top 80%" },
+        scale: 0.9,
+        opacity: 0,
+        duration: 1.5,
+        ease: "power3.out",
+      });
+    }
   }
 }
 

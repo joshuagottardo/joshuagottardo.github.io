@@ -806,6 +806,10 @@ footer {
   a, button, .btn, .social-link, .lang-btn, input, textarea, select {
     cursor: pointer !important;
   }
+
+  .profile-img {
+    filter: grayscale(0%); /* Toglie il bianco e nero */
+  }
 }
 
 /* --- Mobile (< 768px) --- */
