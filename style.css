@@ -807,8 +807,14 @@ footer {
     cursor: pointer !important;
   }
 
+  .image-wrapper {
+    opacity: 1 !important;        /* Vince su GSAP opacity: 0 */
+    transform: none !important;   /* Vince su GSAP scale: 0.9 */
+    visibility: visible !important;
+  }
+  
   .profile-img {
-    filter: grayscale(0%); /* Toglie il bianco e nero */
+    filter: grayscale(0%);
   }
 }
 
