@@ -297,13 +297,14 @@ function initAbout() {
   }
 }
 
-// --- SKILLS SECTION (Horizontal Scroll) ---
+// --- SKILLS SECTION ---
 function initHorizontalSkills() {
   const skillsSection = document.querySelector("#skills");
   const skillsWrapper = document.querySelector(".skills-wrapper");
 
   if (!skillsSection || !skillsWrapper) return;
 
+  // Cleanup preventivo
   ScrollTrigger.getAll().forEach((t) => {
     if (t.trigger === skillsSection || t.trigger === skillsWrapper) t.kill();
   });
@@ -312,7 +313,9 @@ function initHorizontalSkills() {
   if (existingSpacer) existingSpacer.remove();
 
   ScrollTrigger.matchMedia({
-    "(min-width: 901px)": function () {
+    
+    // 1. DESKTOP
+    "(min-width: 901px) and (pointer: fine)": function () {
       const full = skillsWrapper.scrollWidth;
       const viewport = window.innerWidth;
       const moveDist = Math.max(0, full - viewport);
@@ -334,7 +337,7 @@ function initHorizontalSkills() {
         start: "top top",
         end: () => "+=" + (window.innerHeight + moveDist),
         scrub: 1,
-        pin: true,
+        pin: true, 
         onUpdate(self) {
           const prog = self.progress;
           const x = -prog * moveDist;
@@ -343,8 +346,8 @@ function initHorizontalSkills() {
       });
     },
 
-    // Mobile logic
-    "(max-width: 900px)": function () {
+    // 2. DISPOSITIVI TOUCH 
+    "(max-width: 900px), (pointer: coarse), (hover: none)": function () {
       gsap.set(skillsWrapper, { clearProps: "all" });
       ScrollTrigger.getAll().forEach((t) => t.kill());
 
@@ -352,7 +355,11 @@ function initHorizontalSkills() {
       if (existingSpacer) existingSpacer.remove();
 
       skillsSection.style.overflowX = "auto";
+      skillsSection.style.overflowY = "hidden"; 
       skillsSection.style.height = "auto";
+      
+      skillsSection.style.scrollbarWidth = "none";
+      skillsSection.style.msOverflowStyle = "none";
     },
   });
 }
