@@ -791,6 +791,21 @@ footer {
   }
   .p-content h3 { font-size: 1.8rem; }
   .p-tech { gap: 8px; margin-bottom: 1.5rem; }
+
+  /* Disabilita cursore personalizzato su mobile */
+  .cursor-dot,
+  .cursor-outline {
+    display: none !important;
+  }
+
+  /* Ripristina cursore nativo */
+  * {
+    cursor: auto !important;
+  }
+  
+  a, button, .btn, .social-link, .lang-btn, input, textarea, select {
+    cursor: pointer !important;
+  }
 }
 
 /* --- Mobile (< 768px) --- */

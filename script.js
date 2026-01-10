@@ -1,5 +1,9 @@
 // --- 0. CURSOR ANIMATION LOGIC ---
 function initCustomCursor() {
+  const isDesktop = window.matchMedia("(min-width: 901px) and (pointer: fine)").matches;
+  
+  if (!isDesktop) return;
+
   const cursorDot = document.querySelector(".cursor-dot");
   const cursorOutline = document.querySelector(".cursor-outline");
 
@@ -20,6 +24,7 @@ function initCustomCursor() {
     });
   });
 
+  // 2. Effetto Hover su elementi cliccabili
   const interactiveElements = document.querySelectorAll(
     "a, button, .btn, .social-link, .lang-btn"
   );
@@ -34,7 +39,6 @@ function initCustomCursor() {
     });
   });
 }
-
 /* =========================================
    1. TRANSLATIONS (i18n)
    ========================================= */
