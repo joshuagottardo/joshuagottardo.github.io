@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="it">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      property="og:title"
+      content="ST Studio Milano | Shoe Structure Design" />
+    <meta
+      property="og:description"
+      content="Ingegnerizzazione e prototipazione calzature. Fondi sportivi, eleganti e stampa 3D." />
+    <meta
+      property="og:image"
+      content="https://www.ststudiomilano.it/img/social-preview.jpg" />
+    <meta property="og:url" content="https://www.ststudiomilano.it" />
+    <meta property="og:type" content="website" />
+
+    <title>Contatti | ST Studio Milano</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600&display=swap"
+      rel="stylesheet" />
+
+    <link rel="stylesheet" href="css/global.css" />
+    <link rel="stylesheet" href="css/contacts.css" />
+  </head>
+
+  <body>
+    <div id="navbar-placeholder"></div>
+
+    <div class="technical-bg"></div>
+
+    <main>
+      <div class="contact-wrapper fade-in">
+        <div class="glass-panel">
+          <div class="contact-info">
+            <h1>PARLACI DEL<br />TUO PROGETTO</h1>
+            <p class="subtitle">
+              Siamo pronti a ingegnerizzare la tua visione. Compila il modulo o
+              usa i contatti diretti.
+            </p>
+
+            <div class="info-group">
+              <div class="info-item">
+                <span class="label">// DOVE SIAMO</span>
+                <p>Via Noventana, 192<br />35027 Noventa Padovana (PD)</p>
+                <a
+                  href="https://maps.app.goo.gl/zt9S5qq8Mm3qeC5M7"
+                  target="_blank"
+                  class="link-arrow"
+                  >Vedi su Mappa &rarr;</a
+                >
+              </div>
+
+              <div class="info-item">
+                <span class="label">// CONTATTI DIRETTI</span>
+                <p>
+                  <a href="mailto:st.studio.milano@gmail.com"
+                    >st.studio.milano@gmail.com</a
+                  >
+                </p>
+                <p><a href="tel:+393393494594">(+39) 339 349 4594</a></p>
+              </div>
+            </div>
+          </div>
+
+          <div class="contact-form-section">
+            <form
+              action="https://formspree.io/f/xdagllav"
+              method="POST"
+              class="tech-form">
+              <div class="form-group">
+                <label for="name">NOME / AZIENDA</label>
+                <input
+                  type="text"
+                  id="name"
+                  name="name"
+                  required
+                  placeholder="Inserisci nome" />
+              </div>
+
+              <div class="form-group">
+                <label for="email">EMAIL</label>
+                <input
+                  type="email"
+                  id="email"
+                  name="email"
+                  required
+                  placeholder="name@example.com" />
+              </div>
+
+              <div class="form-group">
+                <label for="project-type">TIPO DI PROGETTO</label>
+                <select id="project-type" name="project-type">
+                  <option value="sneakers">Fondi Sportivi (Sneakers)</option>
+                  <option value="heels">Fondi Eleganti (Tacchi/Zeppe)</option>
+                  <option value="prototyping">Prototipia / 3D</option>
+                  <option value="other">Altro / Consulenza</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label for="message">DETTAGLI</label>
+                <textarea
+                  id="message"
+                  name="message"
+                  rows="4"
+                  placeholder="Descrivi brevemente la tua richiesta..."></textarea>
+              </div>
+
+              <button type="submit" class="submit-btn">INVIA RICHIESTA</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <div id="footer-placeholder"></div>
+    <script src="script/global.js"></script>
+  </body>
+</html>

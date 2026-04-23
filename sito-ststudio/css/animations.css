@@ -1,0 +1,118 @@
+/* =========================================
+   1. UTILITY CLASSES & HOVER EFFECTS
+   ========================================= */
+
+/* Effetto Pop-up al passaggio del mouse */
+.animation-pop-up {
+  display: inline-block;
+  transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  transform: perspective(1px) translateZ(0);
+  will-change: transform;
+}
+
+.animation-pop-up:hover,
+.animation-pop-up:focus,
+.animation-pop-up:active {
+  transform: scale(1.05);
+}
+
+/* =========================================
+   2. SCROLL REVEAL SYSTEM
+   (Lavora insieme a global.js Intersection Observer)
+   ========================================= */
+
+/* Stato Iniziale */
+.reveal {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  will-change: opacity, transform;
+}
+
+/* Stato Finale */
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Ritardi per elementi in sequenza */
+.delay-1 { transition-delay: 0.1s; }
+.delay-2 { transition-delay: 0.2s; }
+.delay-3 { transition-delay: 0.3s; }
+.delay-4 { transition-delay: 0.4s; }
+
+/* =========================================
+   3. KEYFRAMES ANIMATIONS
+   ========================================= */
+
+/* Fade In dal basso */
+@keyframes fadeInUp {
+  0% {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Entrata laterale (Sinistra) */
+@keyframes slideInFromLeft {
+  0% {
+    opacity: 0;
+    transform: translateX(-30px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* Entrata laterale (Destra) */
+@keyframes slideInFromRight {
+  0% {
+    opacity: 0;
+    transform: translateX(30px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* Effetto Disegno SVG (Per la scarpa in Home) */
+@keyframes drawLine {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+/* Effetto Laser Scan (Per la pagina Servizi) */
+@keyframes scanDown {
+  0% {
+    top: 0;
+    opacity: 0;
+  }
+  20% {
+    opacity: 1;
+  }
+  80% {
+    opacity: 1;
+  }
+  100% {
+    top: 100%;
+    opacity: 0;
+  }
+}
+
+/* Animazioni Testo Tecnico (Legacy support) */
+@keyframes showTopText {
+  0% { transform: translate3d(0, 100%, 0); }
+  100% { transform: translate3d(0, 0, 0); }
+}
+
+@keyframes showBottomText {
+  0% { transform: translate3d(0, -100%, 0); }
+  100% { transform: translate3d(0, 0, 0); }
+}

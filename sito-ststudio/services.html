@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="it">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      property="og:title"
+      content="ST Studio Milano | Shoe Structure Design" />
+    <meta
+      property="og:description"
+      content="Ingegnerizzazione e prototipazione calzature. Fondi sportivi, eleganti e stampa 3D." />
+    <meta
+      property="og:image"
+      content="https://www.ststudiomilano.it/img/social-preview.jpg" />
+    <meta property="og:url" content="https://www.ststudiomilano.it" />
+    <meta property="og:type" content="website" />
+
+    <title>Servizi | ST Studio Milano</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600&display=swap"
+      rel="stylesheet" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@300;500&display=swap"
+      rel="stylesheet" />
+
+    <link rel="stylesheet" href="css/global.css" />
+    <link rel="stylesheet" href="css/services.css" />
+  </head>
+
+  <body>
+    <div id="navbar-placeholder"></div>
+
+    <div class="technical-bg"></div>
+
+    <main>
+      <div class="page-header fade-in">
+        <h1>COSA SAPPIAMO FARE</h1>
+      </div>
+
+      <div class="grid-container">
+        <div class="tech-card fade-in delay-1">
+          <div class="card-bg bg-sport"></div>
+          <div class="scan-line"></div>
+          <div class="card-overlay"></div>
+
+          <div class="card-body">
+            <span class="serial-number">01</span>
+            <h2>FONDI SPORTIVI</h2>
+
+            <ul class="tech-specs">
+              <li>Sneakers / Chunky / Runners</li>
+              <li>Design battistrada tecnico</li>
+              <li>Ingegnerizzazione EVA & TPU</li>
+              <li>Sviluppo stampi pilota</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="tech-card fade-in delay-2">
+          <div class="card-bg bg-heels"></div>
+          <div class="scan-line"></div>
+          <div class="card-overlay"></div>
+
+          <div class="card-body">
+            <span class="serial-number">02</span>
+            <h2>FONDI ELEGANTI</h2>
+
+            <ul class="tech-specs">
+              <li>Tacchi strutturati (ABS/Polistirolo)</li>
+              <li>Zeppe e Plateau fasciati</li>
+              <li>Monoblocchi complessi</li>
+              <li>Studio stabilità e calzata</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="tech-card fade-in delay-3">
+          <div class="card-bg bg-access"></div>
+          <div class="scan-line"></div>
+          <div class="card-overlay"></div>
+
+          <div class="card-body">
+            <span class="serial-number">03</span>
+            <h2>ACCESSORI</h2>
+
+            <ul class="tech-specs">
+              <li>Personalizzazione Hardware</li>
+              <li>Fibbie e ornamenti tecnici</li>
+              <li>Iniezione micro-plastica</li>
+              <li>Branding 3D</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="tech-card fade-in delay-1">
+          <div class="card-bg bg-tech"></div>
+          <div class="scan-line"></div>
+          <div class="card-overlay"></div>
+
+          <div class="card-body">
+            <span class="serial-number">04</span>
+            <h2>TECNOLOGIE</h2>
+
+            <ul class="tech-specs">
+              <li>Comfort System Design</li>
+              <li>Sottopiedi anatomici</li>
+              <li>Solette memory foam</li>
+              <li>Analisi dei materiali</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="tech-card fade-in delay-2">
+          <div class="card-bg bg-proto"></div>
+          <div class="scan-line"></div>
+          <div class="card-overlay"></div>
+
+          <div class="card-body">
+            <span class="serial-number">05</span>
+            <h2>PROTOTIPIA</h2>
+
+            <ul class="tech-specs">
+              <li>Maquette realizzate a mano</li>
+              <li>Modelleria tradizionale</li>
+              <li>Verifica volumi rapidi</li>
+              <li>Finiture artigianali</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="tech-card fade-in delay-3">
+          <div class="card-bg bg-3d"></div>
+          <div class="scan-line"></div>
+          <div class="card-overlay"></div>
+
+          <div class="card-body">
+            <span class="serial-number">06</span>
+            <h2>PROTOTIPIA 3D</h2>
+
+            <ul class="tech-specs">
+              <li>Stampa 3D</li>
+              <li>Rendering fotorealistici</li>
+              <li>File pronti per stampaggio</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <div id="footer-placeholder"></div>
+    <script src="script/global.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        if (window.innerWidth <= 900) {
+          const observer = new IntersectionObserver(
+            (entries) => {
+              entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                  // Entra nel centro esatto: ACCENDI
+                  entry.target.classList.add("active");
+                } else {
+                  // Esce dal centro: SPEGNI
+                  entry.target.classList.remove("active");
+                }
+              });
+            },
+            {
+              root: null,
+              // La zona di attivazione è solo il 10% centrale dello schermo
+              rootMargin: "-45% 0px -45% 0px",
+              threshold: 0,
+            },
+          );
+
+          const cards = document.querySelectorAll(".tech-card");
+          cards.forEach((card) => {
+            observer.observe(card);
+          });
+        }
+      });
+    </script>
+  </body>
+</html>

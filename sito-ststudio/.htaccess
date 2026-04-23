@@ -1,0 +1,9 @@
+# Abilita il modulo di riscrittura
+RewriteEngine On
+RewriteBase /
+
+# Reindirizza alla pagina contacts.html
+RewriteRule ^contacts$ /contacts.html [L,R=301]
+
+# Gestisce URL puliti per altri file .html
+RewriteRule ^([a-zA-Z0-9_-]+)$ $1.html [L]

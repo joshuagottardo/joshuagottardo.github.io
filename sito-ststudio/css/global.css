@@ -1,0 +1,318 @@
+/* =========================================
+   1. VARIABLES & RESET
+   ========================================= */
+
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,400;1,600&display=swap');
+
+:root {
+  --bg-color: #0a0a0a;
+  --text-color: #ffffff;
+  --accent-color: #888888;
+  --glass-bg: rgba(20, 20, 20, 0.85);
+  --glass-border: 1px solid rgba(255, 255, 255, 0.1);
+  --font-main: "Montserrat", sans-serif;
+  --font-serif: 'Cormorant Garamond', serif;
+  --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-family: var(--font-main);
+  background-color: #050505; /* Fallback */
+  color: var(--text-color);
+  scroll-behavior: smooth;
+  overflow-x: hidden;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background: radial-gradient(circle at top right, #1a1a1a 0%, #0a0a0a 100%);
+  
+  /* Page Transition Init */
+  opacity: 0;
+  transition: opacity 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+body.loaded {
+  opacity: 1;
+}
+
+/* =========================================
+   2. NAVBAR STRUCTURE
+   ========================================= */
+.navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 40px;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 1000;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(10px);
+  border-bottom: var(--glass-border);
+  transition: var(--transition);
+}
+
+.navbar-logo {
+  height: 40px;
+  width: auto;
+  transition: var(--transition);
+}
+
+.navbar-logo:hover {
+  transform: scale(1.05);
+  filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.3));
+}
+
+.nav-links {
+  display: flex;
+  gap: 40px;
+  align-items: center;
+}
+
+/* =========================================
+   3. NAVBAR LINKS (Technical Brackets Style)
+   ========================================= */
+.navbar-item {
+  position: relative;
+  text-decoration: none;
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 14px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  padding: 0 5px;
+}
+
+/* Brackets Setup (Hidden by default) */
+.navbar-item::before,
+.navbar-item::after {
+  position: absolute;
+  opacity: 0;
+  top: 0;
+  color: var(--accent-color);
+  font-weight: 300;
+  transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.navbar-item::before {
+  content: '[';
+  left: 5px;
+}
+
+.navbar-item::after {
+  content: ']';
+  right: 5px;
+}
+
+/* Hover & Active States */
+.navbar-item:hover,
+.navbar-item.active {
+  color: white;
+  letter-spacing: 2px;
+}
+
+.navbar-item:hover::before,
+.navbar-item.active::before {
+  opacity: 1;
+  left: -10px;
+}
+
+.navbar-item:hover::after,
+.navbar-item.active::after {
+  opacity: 1;
+  right: -10px;
+}
+
+/* =========================================
+   4. LANGUAGE SWITCHER (Flags)
+   ========================================= */
+.lang-switch {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.flag-icon {
+  width: 24px;
+  height: auto;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  filter: grayscale(100%);
+  opacity: 0.5;
+}
+
+/* Hover Effect */
+a:hover .flag-icon {
+  filter: grayscale(0%);
+  opacity: 1;
+  transform: scale(1.1);
+}
+
+/* Active State */
+.flag-icon.active {
+  filter: grayscale(0%);
+  opacity: 1;
+  cursor: default;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+  border-radius: 2px;
+}
+
+/* =========================================
+   5. MOBILE MENU & HAMBURGER
+   ========================================= */
+.hamburger-btn {
+  display: none; /* Hidden on Desktop */
+  flex-direction: column;
+  justify-content: space-between;
+  width: 30px;
+  height: 20px;
+  cursor: pointer;
+  z-index: 1000;
+}
+
+.hamburger-btn .bar {
+  width: 100%;
+  height: 2px;
+  background-color: white;
+  border-radius: 2px;
+  transition: all 0.3s ease-in-out;
+  transform-origin: center;
+}
+
+/* Hamburger Animations */
+.hamburger-btn.active .bar:nth-child(1) { transform: translateY(9px) rotate(45deg); }
+.hamburger-btn.active .bar:nth-child(2) { opacity: 0; }
+.hamburger-btn.active .bar:nth-child(3) { transform: translateY(-9px) rotate(-45deg); }
+
+/* Menu Overlay */
+.menu {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100vw; height: 100vh;
+  background-color: rgba(5, 5, 5, 0.95);
+  backdrop-filter: blur(10px);
+  z-index: 998;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 30px;
+  
+  /* Initial State */
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.menu.active {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+/* Menu Links Style */
+.menu a {
+  color: white;
+  text-decoration: none;
+  font-family: var(--font-main);
+  font-size: 28px;
+  font-weight: 300;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  
+  /* Entry Animation */
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.4s ease, transform 0.4s ease;
+}
+
+.menu.active a {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.menu a:hover {
+  color: var(--accent-color);
+  letter-spacing: 4px;
+}
+
+/* Staggered Delay for Links */
+.menu.active a:nth-child(1) { transition-delay: 0.1s; }
+.menu.active a:nth-child(2) { transition-delay: 0.2s; }
+.menu.active a:nth-child(3) { transition-delay: 0.3s; }
+.menu.active a:nth-child(4) { transition-delay: 0.4s; }
+
+/* =========================================
+   6. FOOTER & SCROLLBAR
+   ========================================= */
+footer {
+  margin-top: auto;
+  padding: 40px 20px;
+  text-align: center;
+  border-top: var(--glass-border);
+  background: #050505;
+  color: var(--accent-color);
+  font-size: 12px;
+  letter-spacing: 1px;
+}
+
+footer a {
+  color: white;
+  text-decoration: none;
+  border-bottom: 1px solid #333;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: #0a0a0a; }
+::-webkit-scrollbar-thumb { background: #333; border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: var(--accent-color); }
+
+::selection {
+  background: white;
+  color: black;
+}
+
+/* =========================================
+   7. MEDIA QUERIES (Responsive)
+   ========================================= */
+@media (max-width: 900px) {
+  /* Hide Desktop Elements */
+  .nav-links,
+  .desktop-only {
+    display: none !important;
+  }
+
+  /* Show Mobile Elements */
+  .hamburger-btn {
+    display: flex;
+  }
+
+  .navbar {
+    padding: 15px 20px;
+  }
+
+  /* Mobile Language Selector */
+  .mobile-lang {
+    margin-top: 30px;
+    display: flex;
+    gap: 20px;
+    align-items: center;
+  }
+
+  .mobile-lang .flag-icon {
+    width: 35px;
+  }
+}

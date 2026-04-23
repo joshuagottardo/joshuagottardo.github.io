@@ -1,0 +1,248 @@
+/* =========================================
+   1. PAGE LAYOUT
+   ========================================= */
+main {
+    padding-top: 140px;
+    padding-bottom: 80px;
+    display: flex;
+    justify-content: center;
+    min-height: 100vh;
+}
+
+/* Background Griglia Tecnica */
+.technical-bg {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    z-index: -1;
+    opacity: 0.15;
+    background-image: 
+        linear-gradient(rgba(255, 255, 255, 0.1) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.1) 1px, transparent 1px);
+    background-size: 50px 50px;
+    pointer-events: none;
+}
+
+.content-wrapper {
+    width: 85%;
+    max-width: 1100px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
+}
+
+/* =========================================
+   2. HERO SECTION
+   ========================================= */
+.subtitle-label {
+    font-family: 'Roboto Mono', monospace;
+    color: var(--accent-color);
+    font-size: 14px;
+    letter-spacing: 2px;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+}
+
+.page-title {
+    font-family: var(--font-serif); /* Font Elegante */
+    font-size: 80px; /* Molto più grande */
+    font-weight: 400; /* Leggero, non bold */
+    font-style: italic; /* Il corsivo del Garamond è bellissimo */
+    line-height: 0.9; /* Molto compatto */
+    letter-spacing: -2px; /* Lettere vicine per eleganza */
+    margin-bottom: 30px;
+    color: white;
+}
+
+.lead-text {
+    font-family: var(--font-main);
+    font-size: 20px;
+    font-weight: 300;
+    line-height: 1.6;
+    color: rgba(255, 255, 255, 0.9);
+    max-width: 700px;
+    border-left: 3px solid var(--accent-color);
+    padding-left: 20px;
+}
+
+b { 
+    font-weight: 700; 
+    color: white; 
+}
+
+.lead-text b { 
+    font-family: var(--font-serif);
+    font-weight: 600; 
+    font-size: 1.1em;
+    color: white; 
+    font-style: italic;
+}
+
+.highlight {
+    background: linear-gradient(transparent 60%, rgba(255, 255, 255, 0.2) 60%);
+    color: white;
+    
+    padding: 0 5px;
+    vertical-align: baseline;
+}
+
+/* =========================================
+   3. SPLIT SECTION (Grid)
+   ========================================= */
+.split-section {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr; /* Testo largo, Dati stretti */
+    gap: 60px;
+    margin-top: 100px;
+    align-items: start;
+}
+
+h2 {
+    font-family: var(--font-serif);
+    font-size: 42px; /* Aumentato */
+    font-weight: 300;
+    font-style: italic;
+    letter-spacing: 0;
+    margin-bottom: 25px;
+    color: white;
+    text-transform: none; /* Il Garamond sta meglio in minuscolo/titolo */
+}
+
+.text-column p {
+    font-family: var(--font-main);
+    font-size: 16px;
+    line-height: 1.8;
+    color: rgba(255, 255, 255, 0.7);
+    margin-bottom: 25px;
+}
+
+/* =========================================
+   4. DATA COLUMN (Technical Side)
+   ========================================= */
+.data-column {
+    background: rgba(255, 255, 255, 0.03);
+    border: var(--glass-border);
+    padding: 30px;
+    position: relative;
+    backdrop-filter: blur(5px);
+}
+
+/* Angolo decorativo tecnico */
+.data-column::before {
+    content: '';
+    position: absolute;
+    top: -1px; left: -1px;
+    width: 20px; height: 20px;
+    border-top: 2px solid var(--accent-color);
+    border-left: 2px solid var(--accent-color);
+    z-index: 2;
+}
+
+.spec-label {
+    font-family: 'Roboto Mono', monospace;
+    font-size: 12px;
+    color: var(--accent-color);
+    display: block;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.tech-spec ul {
+    list-style: none;
+    padding: 0;
+}
+
+.tech-spec li {
+    font-family: 'Roboto Mono', monospace;
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.9);
+    margin-bottom: 15px;
+    letter-spacing: 1px;
+    display: flex;
+    align-items: center;
+}
+
+/* Bullet point quadrato custom */
+.tech-spec li::before {
+    content: '';
+    display: inline-block;
+    width: 6px; height: 6px;
+    background: var(--accent-color);
+    margin-right: 15px;
+}
+
+/* =========================================
+   5. VISION & TEAM GRIDS
+   ========================================= */
+.grid-2-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+    margin-top: 80px;
+}
+
+.glass-box {
+    background: var(--glass-bg);
+    border: var(--glass-border);
+    padding: 40px;
+    transition: var(--transition);
+}
+
+.glass-box:hover {
+    border-color: rgba(255, 255, 255, 0.3);
+    background: rgba(30, 30, 30, 0.9);
+}
+
+.structure-box h3 {
+    font-family: var(--font-serif);
+    font-size: 28px;
+    font-weight: 600;
+    color: white; /* Bianco puro invece che grigio */
+    margin-bottom: 15px;
+    text-transform: none;
+    letter-spacing: 0;
+}
+
+.structure-box p {
+    color: rgba(255, 255, 255, 0.7);
+    line-height: 1.7;
+    font-size: 15px;
+}
+
+/* =========================================
+   6. RESPONSIVE
+   ========================================= */
+@media (max-width: 900px) {
+    .page-title { 
+        font-size: 48px; 
+    }
+    
+    .split-section { 
+        grid-template-columns: 1fr; 
+        gap: 40px; 
+    }
+    
+    /* Su mobile, i dati tecnici salgono sopra al testo */
+    .data-column { 
+        order: -1; 
+        margin-bottom: 20px;
+    }
+}
+
+@media (max-width: 600px) {
+    .page-title { 
+        font-size: 40px; 
+    }
+    
+    .grid-2-col { 
+        grid-template-columns: 1fr; 
+    }
+    
+    .lead-text { 
+        font-size: 18px; 
+        border-left: none; 
+        padding-left: 0; 
+        border-top: 2px solid var(--accent-color);
+        padding-top: 20px;
+    }
+}
