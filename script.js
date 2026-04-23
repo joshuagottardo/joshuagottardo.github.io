@@ -1,7 +1,7 @@
 // --- 0. CURSOR ANIMATION LOGIC ---
 function initCustomCursor() {
   const isDesktop = window.matchMedia("(min-width: 901px) and (pointer: fine)").matches;
-  
+
   if (!isDesktop) return;
 
   const cursorDot = document.querySelector(".cursor-dot");
@@ -101,6 +101,7 @@ const translations = {
     proj_3_title: "ST Studio Milano",
     proj_3_desc:
       "Non solo una vetrina, ma un asset digitale per il posizionamento del brand sui mercati internazionali. Focalizzato su architettura SEO-friendly per massimizzare la conversione dei visitatori in lead qualificati.",
+    offline_site: "* Nota: Il dominio originale è momentaneamente offline. Il link sottostante reindirizza a una copia d'archivio funzionante.",
     visit_site: "Visita il Sito",
 
     // Footer
@@ -165,6 +166,7 @@ const translations = {
     proj_3_title: "ST Studio Milano",
     proj_3_desc:
       "Not just a showcase, but a digital asset for international brand positioning. Focused on an SEO-friendly architecture to maximize converting visitors into qualified leads.",
+    offline_site: "* Note: The original domain is currently offline. The link below redirects to a working archived copy.",
     visit_site: "Visit Website",
 
     // Footer
@@ -292,7 +294,7 @@ function initAbout() {
       gsap.from(".image-wrapper", {
         scrollTrigger: { trigger: "#about", start: "top 80%" },
         scale: 0.9,
-        opacity: 0, 
+        opacity: 0,
         duration: 1.5,
         ease: "power3.out",
       });
@@ -316,7 +318,7 @@ function initHorizontalSkills() {
   if (existingSpacer) existingSpacer.remove();
 
   ScrollTrigger.matchMedia({
-    
+
     // 1. DESKTOP
     "(min-width: 901px) and (pointer: fine)": function () {
       const full = skillsWrapper.scrollWidth;
@@ -340,7 +342,7 @@ function initHorizontalSkills() {
         start: "top top",
         end: () => "+=" + (window.innerHeight + moveDist),
         scrub: 1,
-        pin: true, 
+        pin: true,
         onUpdate(self) {
           const prog = self.progress;
           const x = -prog * moveDist;
@@ -358,9 +360,9 @@ function initHorizontalSkills() {
       if (existingSpacer) existingSpacer.remove();
 
       skillsSection.style.overflowX = "auto";
-      skillsSection.style.overflowY = "hidden"; 
+      skillsSection.style.overflowY = "hidden";
       skillsSection.style.height = "auto";
-      
+
       skillsSection.style.scrollbarWidth = "none";
       skillsSection.style.msOverflowStyle = "none";
     },
