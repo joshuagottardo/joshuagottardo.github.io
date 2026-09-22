@@ -92,7 +92,7 @@ const translations = {
     projects_title: "I Miei Progetti",
     proj_1_title: "Studio Eclettica System",
     proj_1_desc:
-      "Ecosistema digitale per la gestione di un uffico calzaturiero. Oltre al tracking dell'inventario, integra una dashboard di <strong>Business Intelligence</strong> e moduli <strong>AI</strong> per ridurre i tempi impiegati nelle classiche operazioni di gestione dell'inventario.",
+      "Ecosistema digitale per la gestione di un ufficio calzaturiero. Oltre al tracking dell'inventario, integra una dashboard di <strong>Business Intelligence</strong> e moduli <strong>AI</strong> per ridurre i tempi impiegati nelle classiche operazioni di gestione dell'inventario.",
 
     proj_2_title: "Resell Vault & Analytics",
     proj_2_desc:
@@ -101,7 +101,11 @@ const translations = {
     proj_3_title: "ST Studio Milano",
     proj_3_desc:
       "Non solo una vetrina, ma un asset digitale per il posizionamento del brand sui mercati internazionali. Focalizzato su architettura SEO-friendly per massimizzare la conversione dei visitatori in lead qualificati.",
+    proj_4_title: "Studio Eclettica Website",
+    proj_4_desc:
+      "Riprogettazione completa della presenza digitale per uno studio di design calzaturiero con oltre trent'anni di storia. Architettura moderna, performante e bilingue, orientata a valorizzare l'artigianalità italiana e l'ingegnerizzazione di prodotto.",
     offline_site: "* Nota: Il dominio originale è momentaneamente offline. Il link sottostante reindirizza a una copia d'archivio funzionante.",
+    upcoming_site: "* Nota: Il sito non è ancora online. Il link sottostante permette di esplorare l'anteprima completa e funzionante.",
     visit_site: "Visita il Sito",
 
     // Footer
@@ -166,7 +170,11 @@ const translations = {
     proj_3_title: "ST Studio Milano",
     proj_3_desc:
       "Not just a showcase, but a digital asset for international brand positioning. Focused on an SEO-friendly architecture to maximize converting visitors into qualified leads.",
+    proj_4_title: "Studio Eclettica Website",
+    proj_4_desc:
+      "Complete digital redesign for a footwear and luxury accessories design studio with over 30 years of heritage. A modern, high-performance, bilingual architecture engineered to showcase Italian craftsmanship and product engineering.",
     offline_site: "* Note: The original domain is currently offline. The link below redirects to a working archived copy.",
+    upcoming_site: "* Note: The website is not yet live. The link below allows you to explore the complete working preview.",
     visit_site: "Visit Website",
 
     // Footer
@@ -180,7 +188,15 @@ const translations = {
    2. LANGUAGE SWITCHER LOGIC
    ========================================= */
 function setLanguage(lang) {
-  // 1. Aggiorna testi
+  // 1. Aggiorna attributo lingua del documento
+  document.documentElement.lang = lang;
+
+  // 2. Salva preferenza
+  try {
+    localStorage.setItem("portfolio_lang", lang);
+  } catch (e) {}
+
+  // 3. Aggiorna testi
   const elements = document.querySelectorAll("[data-i18n]");
   elements.forEach((el) => {
     const key = el.getAttribute("data-i18n");
@@ -189,7 +205,7 @@ function setLanguage(lang) {
     }
   });
 
-  // 2. Aggiorna stato bottoni
+  // 4. Aggiorna stato bottoni
   document.querySelectorAll(".lang-btn").forEach((btn) => {
     btn.classList.remove("active");
     if (
@@ -287,15 +303,15 @@ function initAbout() {
     });
   }
 
-  // 2. Animazione Immagine 
+  // 2. Animazione Terminal Card
   if (window.innerWidth > 900) {
-    const imageWrapper = document.querySelector(".image-wrapper");
-    if (imageWrapper) {
-      gsap.from(".image-wrapper", {
+    const terminalCard = document.querySelector(".terminal-card");
+    if (terminalCard) {
+      gsap.from(".terminal-card", {
         scrollTrigger: { trigger: "#about", start: "top 80%" },
-        scale: 0.9,
+        scale: 0.95,
         opacity: 0,
-        duration: 1.5,
+        duration: 1.2,
         ease: "power3.out",
       });
     }
@@ -373,6 +389,20 @@ function initHorizontalSkills() {
    4. INITIALIZATION
    ========================================= */
 window.addEventListener("load", () => {
+  // Anno copyright dinamico
+  const yearEl = document.querySelector(".copyright-year");
+  if (yearEl) {
+    yearEl.textContent = new Date().getFullYear();
+  }
+
+  // Ripristina lingua preferita
+  try {
+    const savedLang = localStorage.getItem("portfolio_lang");
+    if (savedLang && (savedLang === "it" || savedLang === "en")) {
+      setLanguage(savedLang);
+    }
+  } catch (e) {}
+
   initHero();
   initAbout();
   initHorizontalSkills();
