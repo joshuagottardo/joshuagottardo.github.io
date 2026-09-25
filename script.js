@@ -216,6 +216,24 @@ function setLanguage(lang) {
     }
   });
 
+  // 5. Aggiorna link e attributi del CV (italiano o inglese)
+  const cvBtn = document.querySelector('a[data-i18n="download_cv"]');
+  if (cvBtn) {
+    const isEn = lang === "en";
+    cvBtn.setAttribute(
+      "href",
+      isEn ? "assets/Joshua_Gottardo_CV_en.pdf" : "assets/Joshua_Gottardo_CV_it.pdf"
+    );
+    cvBtn.setAttribute(
+      "download",
+      isEn ? "Joshua_Gottardo_CV_en.pdf" : "Joshua_Gottardo_CV_it.pdf"
+    );
+    cvBtn.setAttribute(
+      "aria-label",
+      isEn ? "Download Resume" : "Scarica Curriculum Vitae"
+    );
+  }
+
   ScrollTrigger.refresh();
 }
 
