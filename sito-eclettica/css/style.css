@@ -8,6 +8,8 @@
   --text-muted: #888888;
   /* --accent-color: #d4af37; */
   --accent-color: #9c2a22;
+  --accent-color-rgb: 156, 42, 34;
+  --accent-color-bright: #b82e25;
 
   /* Typography */
   --font-serif: "Cormorant Garamond", serif;
@@ -153,107 +155,549 @@ ul {
 }
 
 /* -----------------------------------------------------------
-   5. HERO SPOTLIGHT (CORRETTO E CENTRATO)
+   5. HERO CONSTELLATION GRAPH (INTERACTIVE NETWORK)
 ----------------------------------------------------------- */
-.hero-spotlight {
-  height: 100vh;
-  width: 100%;
+.hero-constellation {
   position: relative;
+  width: 100%;
+  height: 100vh;
+  min-height: 720px;
   overflow: hidden;
-  background-color: #000000;
-  cursor: none;
+  background-color: #050507;
+  user-select: none;
+  touch-action: pan-y;
 }
 
-.spotlight-content {
+/* 1. Bagliore Statico d'Atelier (Dietro l'Hub Centrale - Intensificato) */
+.hero-bg-glow {
+  position: absolute;
+  inset: 0;
   width: 100%;
   height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  position: relative;
+  background: 
+    radial-gradient(ellipse 70% 60% at 50% 48%, rgba(38, 40, 54, 0.92) 0%, rgba(35, 18, 22, 0.5) 42%, rgba(8, 8, 10, 0.96) 75%, #050507 100%);
+  pointer-events: none;
   z-index: 1;
 }
 
-.hero-brand-center {
-  text-align: center;
-  z-index: 2;
-  mix-blend-mode: normal;
-}
-
-.main-brand-logo {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  line-height: 0.8;
-  color: #ffffff;
-}
-
-.brand-studio {
-  font-family: "Courier New", monospace;
-  font-size: 1.5rem;
-  letter-spacing: 10px;
-  text-transform: uppercase;
-  margin-bottom: 1rem;
-  font-weight: 600;
-}
-
-.brand-name {
-  font-family: var(--font-sans);
-  font-size: 14vw;
-  font-weight: 900;
-  letter-spacing: -5px;
-  text-transform: uppercase;
-}
-
-.meta-data {
+/* 2. Bagliore Torcia Dinamico al Cursore (Intensificato e con raggio esteso) */
+.hero-cursor-glow {
   position: absolute;
-  font-family: "Courier New", monospace;
-  font-size: 0.8rem;
-  font-weight: 600;
-  padding: 2rem;
-  color: #ffffff;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle 460px at var(--spotlight-x, 50%) var(--spotlight-y, 48%), rgba(255, 255, 255, 0.12) 0%, rgba(156, 42, 34, 0.08) 38%, rgba(156, 42, 34, 0.02) 65%, transparent 80%);
+  pointer-events: none;
+  z-index: 2;
+  mix-blend-mode: screen;
+  opacity: 1;
+  transition: opacity 0.4s ease;
 }
 
-.top-left {
-  top: 80px;
-  left: 0;
+/* 3. Griglia Architettonica Blueprint con Spotlight Interattivo */
+.hero-bg-grid {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.055) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.055) 1px, transparent 1px),
+    linear-gradient(rgba(255, 255, 255, 0.018) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.018) 1px, transparent 1px);
+  background-size: 80px 80px, 80px 80px, 20px 20px, 20px 20px;
+  background-position: center center;
+  pointer-events: none;
+  z-index: 3;
+  opacity: 0.92;
+  -webkit-mask-image: radial-gradient(circle 480px at var(--spotlight-x, 50%) var(--spotlight-y, 48%), rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0.55) 45%, rgba(0, 0, 0, 0.08) 85%, transparent 100%);
+  mask-image: radial-gradient(circle 480px at var(--spotlight-x, 50%) var(--spotlight-y, 48%), rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0.55) 45%, rgba(0, 0, 0, 0.08) 85%, transparent 100%);
+  will-change: mask-image, -webkit-mask-image;
 }
 
-.top-right {
-  top: 80px;
-  right: 0;
-}
-
-.bottom-left {
-  bottom: 0;
-  left: 0;
-}
-
-.bottom-right {
-  bottom: 0;
-  right: 0;
-}
-
-.cursor-torch {
+/* Background Dynamic SVG Graph */
+.constellation-svg {
   position: absolute;
   top: 0;
   left: 0;
-  width: 350px;
-  height: 350px;
-  background-color: #ffffff;
-  border-radius: 50%;
-  mix-blend-mode: difference;
+  width: 100%;
+  height: 100%;
   pointer-events: none;
-  transform: translate(-50%, -50%);
-  z-index: 10;
-  transition:
-    width 0.3s ease,
-    height 0.3s ease;
+  z-index: 4;
 }
 
-.cursor-torch.active {
-  width: 500px;
-  height: 500px;
+.graph-line {
+  stroke: rgba(255, 255, 255, 0.22);
+  stroke-width: 1.2px;
+  transition: stroke 0.35s ease, stroke-width 0.35s ease, stroke-opacity 0.35s ease;
+}
+
+.graph-line-secondary {
+  stroke: rgba(255, 255, 255, 0.12);
+  stroke-width: 1px;
+  stroke-dasharray: 4 4;
+  transition: stroke 0.35s ease, stroke-width 0.35s ease, stroke-opacity 0.35s ease;
+}
+
+.graph-line.is-active,
+.graph-line-secondary.is-active {
+  stroke: #ffffff;
+  stroke-width: 2px;
+  stroke-opacity: 0.95;
+  filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.7));
+}
+
+/* Technical Corner Markings */
+.hero-constellation .meta-data {
+  position: absolute;
+  font-family: var(--font-sans);
+  font-size: 0.72rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.5);
+  z-index: 5;
+  pointer-events: none;
+}
+
+.hero-constellation .top-left {
+  top: 90px;
+  left: 2.5rem;
+}
+
+.hero-constellation .top-right {
+  top: 90px;
+  right: 2.5rem;
+  text-align: right;
+}
+
+.hero-constellation .bottom-left {
+  bottom: 2rem;
+  left: 2.5rem;
+}
+
+.hero-constellation .bottom-right {
+  bottom: 2rem;
+  right: 2.5rem;
+}
+
+/* Indicatore di Scorrimento Elegante e Centrato */
+.hero-scroll-indicator {
+  position: absolute;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.55rem;
+  z-index: 15;
+  text-decoration: none;
+  cursor: pointer;
+  opacity: 0.7;
+  transition: opacity 0.35s ease, transform 0.35s ease;
+}
+
+.hero-scroll-indicator:hover {
+  opacity: 1;
+  transform: translateX(-50%) translateY(2px);
+}
+
+.hero-scroll-indicator .scroll-text {
+  font-family: var(--font-sans);
+  font-size: 0.65rem;
+  font-weight: 500;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: #ffffff;
+  transition: color 0.3s ease;
+}
+
+.hero-scroll-indicator:hover .scroll-text {
+  color: var(--accent-color);
+}
+
+.hero-scroll-indicator .scroll-track {
+  width: 1px;
+  height: 30px;
+  background: rgba(255, 255, 255, 0.16);
+  position: relative;
+  overflow: hidden;
+  border-radius: 1px;
+}
+
+.hero-scroll-indicator .scroll-runner {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 45%;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.1) 0%, var(--accent-color) 80%, #ffffff 100%);
+  border-radius: 1px;
+  animation: elegantScrollRunner 2.4s cubic-bezier(0.65, 0, 0.35, 1) infinite;
+}
+
+@keyframes elegantScrollRunner {
+  0% {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+  20% {
+    opacity: 1;
+  }
+  75% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(220%);
+    opacity: 0;
+  }
+}
+
+/* Central Architectural Hub */
+.constellation-hub {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  pointer-events: auto;
+  cursor: default;
+  transition: filter 0.3s ease;
+}
+
+.hub-building-svg {
+  width: 350px;
+  height: auto;
+  max-width: 80vw;
+  filter: drop-shadow(0 10px 25px rgba(0, 0, 0, 0.8));
+  display: block;
+  overflow: visible;
+}
+
+.hub-brand-name {
+  margin-top: 1.1rem;
+  font-family: var(--font-sans);
+  font-size: 0.92rem;
+  font-weight: 500;
+  letter-spacing: 5px;
+  text-transform: uppercase;
+  color: #ffffff;
+  opacity: 0.95;
+  min-height: 1.4rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  white-space: nowrap;
+  transition: color 0.3s ease, text-shadow 0.3s ease;
+}
+
+.hub-brand-text {
+  display: inline-block;
+  transition: opacity 0.2s ease;
+}
+
+/* Cursore digitazione macchina da scrivere */
+.hub-brand-name.is-typing::after,
+.hero-constellation.has-focus .hub-brand-name::after {
+  content: '';
+  display: inline-block;
+  width: 2px;
+  height: 1em;
+  background-color: var(--accent-color);
+  margin-left: 6px;
+  vertical-align: middle;
+  box-shadow: 0 0 8px var(--accent-color);
+  animation: typingCursorBlink 0.5s infinite alternate;
+}
+
+@keyframes typingCursorBlink {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
+
+/* -----------------------------------------------------------
+   EFFETTO FOCUS SPOTLIGHT (All'hover su una bolla)
+----------------------------------------------------------- */
+.hero-constellation.has-focus .constellation-node {
+  opacity: 0.22;
+  filter: grayscale(0.6) brightness(0.65);
+  transition: opacity 0.35s ease, filter 0.35s ease, transform 0.35s ease;
+}
+
+.hero-constellation.has-focus .constellation-node.is-focused {
+  opacity: 1 !important;
+  filter: none !important;
+  z-index: 25;
+}
+
+.hero-constellation.has-focus .graph-line:not(.is-active),
+.hero-constellation.has-focus .graph-line-secondary:not(.is-active) {
+  opacity: 0.05;
+  stroke: rgba(255, 255, 255, 0.04);
+  transition: opacity 0.35s ease, stroke 0.35s ease;
+}
+
+.hero-constellation.has-focus .hub-building-svg {
+  opacity: 1;
+}
+
+.hero-constellation.has-focus .hub-building-svg line,
+.hero-constellation.has-focus .hub-building-svg path:not(:first-child) {
+  stroke-opacity: 0.7;
+  transition: stroke-opacity 0.35s ease;
+}
+
+.hero-constellation.has-focus .hub-brand-name {
+  color: #ffffff;
+  text-shadow: 0 0 18px rgba(255, 255, 255, 0.65), 0 0 35px rgba(var(--accent-color-rgb), 0.4);
+}
+
+/* Peripheral Photographic Nodes */
+.constellation-node {
+  position: absolute;
+  z-index: 12;
+  cursor: default;
+  outline: none;
+  transform: translate(-50%, -50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.35s ease, filter 0.35s ease;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.node-circle {
+  position: relative;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 1.5px solid rgba(255, 255, 255, 0.45);
+  box-shadow: 0 0 0 2.5px rgba(8, 8, 8, 0.9), 0 0 0 4px rgba(var(--accent-color-rgb), 0.5), 0 10px 28px rgba(0, 0, 0, 0.85);
+  background-color: #0c0c0c;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease, border-color 0.4s ease;
+  will-change: transform, box-shadow;
+}
+
+.node-circle img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), filter 0.4s ease;
+  filter: brightness(0.9) contrast(1.08);
+}
+
+/* Individual Node Dimensions (4 Tiers of Hierarchy) */
+.node-size-lg .node-circle {
+  width: 155px;
+  height: 155px;
+}
+.node-size-md .node-circle {
+  width: 135px;
+  height: 135px;
+}
+.node-size-sm .node-circle {
+  width: 118px;
+  height: 118px;
+}
+.node-size-xs .node-circle {
+  width: 98px;
+  height: 98px;
+}
+
+/* Highlighted / Focused State (Attivo sia su Desktop che su Mobile finché is-focused è presente) */
+.constellation-node.is-focused .node-circle {
+  transform: scale(1.15);
+  border-color: #ffffff;
+  box-shadow: 0 0 0 3px rgba(8, 8, 8, 0.95), 0 0 0 5.5px var(--accent-color), 0 0 30px rgba(var(--accent-color-rgb), 0.85), 0 0 10px rgba(255, 255, 255, 0.4);
+}
+
+.constellation-node.is-focused .node-circle img {
+  transform: scale(1.1);
+  filter: brightness(1.08) contrast(1.12);
+}
+
+/* Hover States on Nodes (Esclusivamente Desktop con puntatore fine; MAI sticky hover su touch) */
+@media (hover: hover) and (pointer: fine) {
+  .constellation-node:hover .node-circle,
+  .constellation-node:focus-visible .node-circle {
+    transform: scale(1.15);
+    border-color: #ffffff;
+    box-shadow: 0 0 0 3px rgba(8, 8, 8, 0.95), 0 0 0 5.5px var(--accent-color), 0 0 30px rgba(var(--accent-color-rgb), 0.85), 0 0 10px rgba(255, 255, 255, 0.4);
+  }
+
+  .constellation-node:hover .node-circle img {
+    transform: scale(1.1);
+    filter: brightness(1.08) contrast(1.12);
+  }
+}
+
+/* -----------------------------------------------------------
+   RESPONSIVE DESIGN FOR CONSTELLATION HERO
+----------------------------------------------------------- */
+@media (max-width: 900px) {
+  .hero-constellation {
+    min-height: 620px;
+  }
+  .hub-building-svg {
+    width: 290px;
+  }
+  .node-size-lg .node-circle {
+    width: 130px;
+    height: 130px;
+  }
+  .node-size-md .node-circle {
+    width: 115px;
+    height: 115px;
+  }
+  .node-size-sm .node-circle {
+    width: 98px;
+    height: 98px;
+  }
+  .node-size-xs .node-circle {
+    width: 82px;
+    height: 82px;
+  }
+}
+
+@media (max-width: 768px) {
+  .hero-constellation {
+    height: 100vh;
+    height: 100svh;
+    min-height: 660px;
+    max-height: 860px;
+    padding: 0;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .hero-cursor-glow {
+    display: none;
+  }
+
+  .hero-bg-grid {
+    background-size: 60px 60px, 60px 60px, 20px 20px, 20px 20px;
+    -webkit-mask-image: radial-gradient(circle 280px at 50% 46%, rgba(0, 0, 0, 0.85) 0%, rgba(0, 0, 0, 0.3) 60%, transparent 100%);
+    mask-image: radial-gradient(circle 280px at 50% 46%, rgba(0, 0, 0, 0.85) 0%, rgba(0, 0, 0, 0.3) 60%, transparent 100%);
+  }
+
+  .hero-constellation .top-right {
+    display: block;
+    position: absolute;
+    top: 5rem;
+    right: 1.2rem;
+    font-size: 0.62rem;
+    letter-spacing: 1.5px;
+    opacity: 0.55;
+    z-index: 15;
+    text-align: right;
+  }
+
+  .hero-constellation .top-left,
+  .hero-constellation .bottom-left,
+  .hero-constellation .bottom-right {
+    display: none;
+  }
+
+  .hero-scroll-indicator {
+    bottom: 1.2rem;
+    gap: 0.45rem;
+  }
+
+  .hero-scroll-indicator .scroll-text {
+    font-size: 0.58rem;
+    letter-spacing: 3.5px;
+  }
+
+  .hero-scroll-indicator .scroll-track {
+    height: 24px;
+  }
+
+  .constellation-svg {
+    display: block;
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 5;
+    pointer-events: none;
+  }
+
+  .constellation-hub {
+    position: absolute;
+    top: 46%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 10;
+    margin: 0;
+    width: auto;
+    text-align: center;
+  }
+
+  .hub-building-svg {
+    width: 200px;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+  }
+
+  .hub-brand-name {
+    font-size: 0.76rem;
+    letter-spacing: 3px;
+    margin-top: 0.75rem;
+    white-space: nowrap;
+  }
+
+  .constellation-nodes-container {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    display: block;
+    max-width: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .constellation-nodes-container::before {
+    display: none;
+  }
+
+  .constellation-node {
+    position: absolute !important;
+    pointer-events: auto;
+    transform: translate(-50%, -50%) !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0;
+    z-index: 12;
+    cursor: default;
+  }
+
+  /* Dimensioni gerarchiche delle bolle ottimizzate per mobile (Opzione A) */
+  .node-size-lg .node-circle {
+    width: 84px !important;
+    height: 84px !important;
+  }
+  .node-size-md .node-circle {
+    width: 74px !important;
+    height: 74px !important;
+  }
+  .node-size-sm .node-circle {
+    width: 66px !important;
+    height: 66px !important;
+  }
+  .node-size-xs .node-circle {
+    width: 56px !important;
+    height: 56px !important;
+  }
 }
 
 /* -----------------------------------------------------------
@@ -472,20 +916,9 @@ ul {
   pointer-events: none;
 }
 
-.service-card:hover::before {
-  opacity: 1;
-}
-
 .service-card > * {
   position: relative;
   z-index: 2;
-}
-
-.service-card:hover {
-  transform: translateY(-10px);
-  background-color: rgba(255, 255, 255, 0.06);
-  border-color: var(--accent-color);
-  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
 }
 
 .service-number {
@@ -499,9 +932,23 @@ ul {
   transition: var(--transition-fast);
 }
 
-.service-card:hover .service-number {
-  color: var(--accent-color);
-  opacity: 0.6;
+/* Hover States su Concept Cards (Esclusivamente Desktop con mouse, disattivati su mobile) */
+@media (hover: hover) and (pointer: fine) {
+  .service-card:hover::before {
+    opacity: 1;
+  }
+
+  .service-card:hover {
+    transform: translateY(-10px);
+    background-color: rgba(255, 255, 255, 0.06);
+    border-color: var(--accent-color);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+  }
+
+  .service-card:hover .service-number {
+    color: var(--accent-color);
+    opacity: 0.6;
+  }
 }
 
 .service-card h3 {
@@ -582,6 +1029,43 @@ ul {
   .concept-page-hero + .container.section-padding {
     padding-top: 1.5rem;
   }
+
+  /* Disattivazione completa delle animazioni hover sulle card per dispositivi touch / mobile */
+  .service-card:hover,
+  .location-item:hover,
+  .journal-card:hover {
+    transform: none !important;
+    box-shadow: none !important;
+    background-color: rgba(255, 255, 255, 0.03) !important;
+    border-color: rgba(255, 255, 255, 0.08) !important;
+  }
+
+  .service-card:hover::before,
+  .location-item:hover::before {
+    display: none !important;
+    opacity: 0 !important;
+  }
+
+  .service-card:hover .service-number {
+    color: rgba(255, 255, 255, 0.12) !important;
+    opacity: 1 !important;
+  }
+
+  .journal-card:hover .journal-card-image img {
+    transform: none !important;
+  }
+
+  .journal-card:hover h3 {
+    color: #fff !important;
+  }
+
+  .journal-card:hover .journal-read-more {
+    color: #fff !important;
+  }
+
+  .journal-card:hover .journal-read-more span {
+    transform: none !important;
+  }
 }
 
 /* Reduce top padding of grid sections following a page hero on desktop */
@@ -658,21 +1142,24 @@ ul {
   pointer-events: none;
 }
 
-.location-item:hover::before {
-  opacity: 1;
-}
-
 .location-item > * {
   position: relative;
   z-index: 2;
 }
 
-.location-item:hover {
-  transform: translateY(-8px);
-  background-color: rgba(255, 255, 255, 0.06);
-  border-top-color: var(--accent-color);
-  border-color: rgba(255, 255, 255, 0.15);
-  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+/* Hover States su Contatti Cards (Esclusivamente Desktop con mouse, disattivati su mobile) */
+@media (hover: hover) and (pointer: fine) {
+  .location-item:hover::before {
+    opacity: 1;
+  }
+
+  .location-item:hover {
+    transform: translateY(-8px);
+    background-color: rgba(255, 255, 255, 0.06);
+    border-top-color: var(--accent-color);
+    border-color: rgba(255, 255, 255, 0.15);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+  }
 }
 
 .district-name {
@@ -1028,12 +1515,6 @@ h1.page-title {
   flex-direction: column;
 }
 
-.journal-card:hover {
-  transform: translateY(-8px);
-  border-color: var(--accent-color);
-  background-color: rgba(255, 255, 255, 0.04);
-}
-
 .journal-card-image {
   height: 240px;
   width: 100%;
@@ -1047,10 +1528,6 @@ h1.page-title {
   height: 100%;
   object-fit: cover;
   transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
-}
-
-.journal-card:hover .journal-card-image img {
-  transform: scale(1.05);
 }
 
 .journal-card-content {
@@ -1092,10 +1569,6 @@ h1.page-title {
   transition: var(--transition-fast);
 }
 
-.journal-card:hover h3 {
-  color: var(--accent-color);
-}
-
 .journal-card p {
   color: var(--text-muted);
   font-size: 0.95rem;
@@ -1122,12 +1595,29 @@ h1.page-title {
   transition: transform 0.3s ease;
 }
 
-.journal-card:hover .journal-read-more span {
-  transform: translateX(5px);
-}
+/* Hover States su Journal Cards (Esclusivamente Desktop con mouse, disattivati su mobile) */
+@media (hover: hover) and (pointer: fine) {
+  .journal-card:hover {
+    transform: translateY(-8px);
+    border-color: var(--accent-color);
+    background-color: rgba(255, 255, 255, 0.04);
+  }
 
-.journal-card:hover .journal-read-more {
-  color: var(--accent-color);
+  .journal-card:hover .journal-card-image img {
+    transform: scale(1.05);
+  }
+
+  .journal-card:hover h3 {
+    color: var(--accent-color);
+  }
+
+  .journal-card:hover .journal-read-more span {
+    transform: translateX(5px);
+  }
+
+  .journal-card:hover .journal-read-more {
+    color: var(--accent-color);
+  }
 }
 
 /* Dynamic view wrapper transitions */
@@ -1257,128 +1747,7 @@ h1.page-title {
   margin-bottom: 1rem;
 }
 
-/* -----------------------------------------------------------
-   13. HOME HERO EFFECT: FLOATING LOGO & REVEAL CONTAINER
------------------------------------------------------------ */
-.hero-reveal-container {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-  z-index: 2010;
-  /* Sopra il logo fluttuante a riposo (1990) */
-  clip-path: circle(175px at 50% 50%);
-  /* Dinamico da JS */
-  background-color: transparent;
-}
 
-.reveal-logo-black-wrapper {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 550px;
-  height: 550px;
-  max-width: 80vw;
-  max-height: 60vh;
-  pointer-events: none;
-  z-index: 5;
-  /* Sopra le calzature, ma sotto la torcia */
-}
-
-.reveal-logo-black-wrapper img {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-}
-
-.reveal-image {
-  position: absolute;
-  width: 220px;
-  height: 220px;
-  object-fit: contain;
-  opacity: 1;
-  /* Sempre visibile all'interno del clip-path */
-  z-index: 1;
-  transition: transform 0.3s ease;
-}
-
-.reveal-image:hover {
-  transform: scale(1.05);
-}
-
-/* Posizionamento delle scarpe a griglia ordinata (3 sopra e 3 sotto il logo) */
-.reveal-image.pos-top-left {
-  top: 8%;
-  left: 15%;
-}
-
-.reveal-image.pos-top-center {
-  top: 8%;
-  left: 50%;
-  transform: translateX(-50%);
-}
-
-.reveal-image.pos-top-right {
-  top: 8%;
-  right: 15%;
-}
-
-.reveal-image.pos-bottom-left {
-  bottom: 8%;
-  left: 15%;
-}
-
-.reveal-image.pos-bottom-center {
-  bottom: 8%;
-  left: 50%;
-  transform: translateX(-50%);
-}
-
-.reveal-image.pos-bottom-right {
-  bottom: 8%;
-  right: 15%;
-}
-
-.reveal-image.pos-top-center:hover,
-.reveal-image.pos-bottom-center:hover {
-  transform: translateX(-50%) scale(1.05);
-}
-
-/* Adattamento responsive per le scarpe su mobile (2 sopra e 2 sotto) */
-@media (max-width: 768px) {
-  .reveal-image {
-    width: 160px;
-    height: 160px;
-  }
-
-  .reveal-image.pos-top-center,
-  .reveal-image.pos-bottom-center {
-    display: none;
-  }
-
-  .reveal-image.pos-top-left {
-    top: 10%;
-    left: 5%;
-  }
-
-  .reveal-image.pos-top-right {
-    top: 10%;
-    right: 5%;
-  }
-
-  .reveal-image.pos-bottom-left {
-    bottom: 10%;
-    left: 5%;
-  }
-
-  .reveal-image.pos-bottom-right {
-    bottom: 10%;
-    right: 5%;
-  }
-}
 
 
 
@@ -1547,4 +1916,88 @@ h1.page-title {
     font-size: 1rem;
     transform: scale(1.2);
   }
+}
+
+/* -----------------------------------------------------------
+   CURSORE PERSONALIZZATO LUXURY ATELIER (Solo Desktop con Mouse)
+----------------------------------------------------------- */
+/* Di default, completamente disattivato e nascosto su tutti i dispositivi touch */
+.custom-cursor-dot,
+.custom-cursor-ring {
+  display: none !important;
+}
+
+/* Attivato unicamente su dispositivi desktop con mouse reale e capacità di hover */
+@media (hover: hover) and (pointer: fine) {
+  body {
+    cursor: none;
+  }
+
+  a, button, input, textarea, select, .constellation-node, .hero-scroll-indicator, [role="button"] {
+    cursor: none !important;
+  }
+
+  .custom-cursor-dot,
+  .custom-cursor-ring {
+    display: block !important;
+    position: fixed;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+    z-index: 999999;
+    border-radius: 50%;
+    opacity: 0;
+    transition: opacity 0.3s ease, width 0.25s cubic-bezier(0.16, 1, 0.3, 1), height 0.25s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.25s ease, background-color 0.25s ease, box-shadow 0.25s ease;
+    will-change: transform, opacity;
+  }
+
+  .custom-cursor-dot {
+    width: 5px;
+    height: 5px;
+    background-color: #ffffff;
+    box-shadow: 0 0 6px rgba(255, 255, 255, 0.8);
+    transform: translate(-50%, -50%);
+  }
+
+  .custom-cursor-ring {
+    width: 32px;
+    height: 32px;
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    background-color: transparent;
+    transform: translate(-50%, -50%);
+  }
+
+  /* Stato Hover su elementi interattivi */
+  body.cursor-hover .custom-cursor-ring {
+    width: 48px;
+    height: 48px;
+    border-color: var(--accent-color);
+    background-color: rgba(var(--accent-color-rgb), 0.08);
+    box-shadow: 0 0 18px rgba(var(--accent-color-rgb), 0.35);
+  }
+
+  body.cursor-hover .custom-cursor-dot {
+    background-color: var(--accent-color);
+    box-shadow: 0 0 8px var(--accent-color);
+    transform: translate(-50%, -50%) scale(1.4);
+  }
+
+  /* Stato Click / Active */
+  body.cursor-active .custom-cursor-ring {
+    width: 24px;
+    height: 24px;
+    border-color: #ffffff;
+    background-color: rgba(255, 255, 255, 0.15);
+  }
+}
+
+/* Touch Ergonomics & Mobile Polish */
+html,
+body,
+.constellation-node,
+.node-circle,
+.hero-scroll-indicator,
+a,
+button {
+  -webkit-tap-highlight-color: transparent;
 }
